@@ -40,6 +40,7 @@ class CategoryController extends Controller
     public function store(Category $category, CategoryRequest $request)
     {
         $category->fill($request->only($category->getFillable()));
+        $category->user_id = auth()->user()->id;
         $category->save();
 
         return redirect()->route('category.index');
@@ -88,8 +89,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('category.index');
     }
 }

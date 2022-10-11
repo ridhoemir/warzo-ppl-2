@@ -1,8 +1,13 @@
 import React from "react";
+import { Inertia } from '@inertiajs/inertia'
 import { Head } from "@inertiajs/inertia-react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 export default function Index({ data ,auth, errors }) {
+    function handleDelete(e) {
+        e.preventDefault()
+        Inertia.delete(`/product_category/${e.target.id}/delete`)
+    }
     return (
         <AuthenticatedLayout
             auth={auth}
@@ -33,7 +38,7 @@ export default function Index({ data ,auth, errors }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-3">
                         <table className="table-fixed w-full border-spacing-2">
                             <thead>
-                                <tr>
+                                <tr className="m-5">
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Code</th>
@@ -42,19 +47,24 @@ export default function Index({ data ,auth, errors }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((item) => (
-                                    <tr>
+                                {data.length > 0 && data.map((item) => (
+                                    <tr className="m-10 h-10">
                                         <td className="text-center">{item.id}</td>
                                         <td className="text-center">{item.category_name}</td>
                                         <td className="text-center">{item.category_code}</td>
                                         {/* <td>{item.created_at}</td> */}
-                                        <td className="text-center">
-                                            <a href={route("category.edit.form", item.id)} className="rounded-md border-grey border-2 p-1 justify-center m-1">Edit</a>
-                                            <a href={route("dashboard")} className="rounded-md border-grey border-2 p-1 justify-center m-1">Edit</a>
+                                        <td className="text-center m-5">
+                                            <a href={route("category.edit.form", item.id)} className="rounded-md border-grey border-2 p-1 justify-center m-2">Edit</a>
+                                            <button id={item.id} type="submit" onClick={handleDelete} className="rounded-md border-grey border-2 p-1 justify-center m-2">Delete</button>
 
                                         </td>
                                     </tr>
                                 ))}
+                                {data.length === 0 && 
+                                    <tr className="m-10 h-10">
+                                        <td className="text-center" colSpan="4">No Data</td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
