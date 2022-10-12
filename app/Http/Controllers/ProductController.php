@@ -44,8 +44,6 @@ class ProductController extends Controller
     {
         $product->fill($request->only($product->getFillable()));
         $product->user_id = auth()->user()->id;
-        $product->product_stock_alert = ' ';
-        $product->product_barcode_symbology = ' ';
         $product->save();
 
         return redirect()->route('product.index');
