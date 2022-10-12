@@ -210,6 +210,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Route' => Illuminate\Support\Facades\Route::class,
     ])->toArray(),
 
 ];
