@@ -86,7 +86,7 @@ export default function AddForm({ urlPost, categories ,auth, errors }) {
                           {errors.category_id && <h6 className='text-red-500 text-sm'>{errors.category_id}</h6>}
                           {categories.length > 0 && 
                           <select name="category_id" id="category_id" onChange={handleChange}>
-                            <option disabled>Select Category</option>
+                            <option>Select Category</option>
                             {categories.length > 0 &&  categories.map((category) => (
                               <option value={category.id}>{category.category_name}</option>
                             ))}
