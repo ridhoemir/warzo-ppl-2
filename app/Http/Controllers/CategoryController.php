@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::all();
+        $data = Category::where('user_id', auth()->user()->id)->get();
         return Inertia::render('Category/Index', ['data' => $data]);
         // dd($data);
     }
