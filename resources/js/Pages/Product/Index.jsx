@@ -6,7 +6,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 export default function Index({ data ,auth, errors }) {
     function handleDelete(e) {
         e.preventDefault()
-        Inertia.delete(`/product_category/${e.target.id}/delete`)
+        Inertia.delete(`/product/${e.target.id}/delete`)
     }
     return (
         <AuthenticatedLayout
@@ -59,7 +59,7 @@ export default function Index({ data ,auth, errors }) {
                                         <td className="text-center">{item.category.category_name}</td>
                                         {/* <td>{item.created_at}</td> */}
                                         <td className="text-center m-5">
-                                            <a href={route("category.edit.form", item.id)} className="rounded-md border-grey border-2 p-1 justify-center m-2">Edit</a>
+                                            <a href={route("product.edit.form", item.id)} className="rounded-md border-grey border-2 p-1 justify-center m-2">Edit</a>
                                             <button id={item.id} type="submit" onClick={handleDelete} className="rounded-md border-grey border-2 p-1 justify-center m-2">Delete</button>
 
                                         </td>

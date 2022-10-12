@@ -43,9 +43,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create.form');
     Route::post('/product/create', [ProductController::class, 'store'])->name('product.create.store');
-    Route::get('/product/{category}/update', [ProductController::class, 'edit'])->name('product.edit.form');
-    Route::patch('/product/{category}/patch', [ProductController::class, 'update'])->name('product.edit.post');
-    Route::delete('/product/{category}/delete', [ProductController::class, 'destroy'])->name('product.delete');
+    Route::get('/product/{product}/update', [ProductController::class, 'edit'])->name('product.edit.form');
+    Route::patch('/product/{product}/patch', [ProductController::class, 'update'])->name('product.edit.post');
+    Route::delete('/product/{product}/delete', [ProductController::class, 'destroy'])->name('product.delete');
 
     
 });

@@ -68,9 +68,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        return Inertia::render('Product/EditForm', [
+            'urlPost' => route('product.edit.post', $product->id),
+            'data' => $product,
+            'categories' => \App\Models\Category::where('user_id', auth()->user()->id)->get()
+            ]);
     }
 
     /**
@@ -80,10 +84,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
-    }
+        $product->fill($request->only($product->getFillable()));
+        if($product->isDirty()) $product->save();
+
+        return redirect()->route('product.index');
+    }   
 
     /**
      * Remove the specified resource from storage.
@@ -91,8 +98,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('product.index');
     }
 }

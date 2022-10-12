@@ -11,12 +11,13 @@ export default function AddForm({ urlPost, categories ,auth, errors }) {
         product_note: "",
         product_quantity: 0,
         product_cost: 0,
+        product_price: 0,
         category_id: 0,
       })
     
       function handleChange(e) {
         const key = e.target.id;
-        const value = e.target.value
+        const value = e.target.type === 'number'? Number(e.target.value) : e.target.value
         setValues(values => ({
             ...values,
             [key]: value,
