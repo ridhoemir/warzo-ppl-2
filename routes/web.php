@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/product_category/{category}/update', [CategoryController::class, 'edit'])->name('category.edit.form');
     Route::patch('/product_category/{category}/patch', [CategoryController::class, 'update'])->name('category.edit.post');
     Route::delete('/product_category/{category}/delete', [CategoryController::class, 'destroy'])->name('category.delete');
+
+    //Product 
+    Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+    Route::get('/product/create', [ProductController::class, 'create'])->name('product.create.form');
+    Route::post('/product/create', [ProductController::class, 'store'])->name('product.create.store');
+    Route::get('/product/{product}/update', [ProductController::class, 'edit'])->name('product.edit.form');
+    Route::patch('/product/{product}/patch', [ProductController::class, 'update'])->name('product.edit.post');
+    Route::delete('/product/{product}/delete', [ProductController::class, 'destroy'])->name('product.delete');
+
+    
 });
 
 
