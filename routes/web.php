@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,5 +28,16 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    //Product Category
+    Route::get('/product_category', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/product_category/create', [CategoryController::class, 'create'])->name('category.create.form');
+    Route::post('/product_category/create', [CategoryController::class, 'store'])->name('category.create.store');
+    Route::get('/product_category/{category}/update', [CategoryController::class, 'edit'])->name('category.edit.form');
+    Route::patch('/product_category/{category}/patch', [CategoryController::class, 'update'])->name('category.edit.post');
+    Route::delete('/product_category/{category}/delete', [CategoryController::class, 'destroy'])->name('category.delete');
+});
+
 
 require __DIR__.'/auth.php';
