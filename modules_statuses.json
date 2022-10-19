@@ -2,5 +2,6 @@
     "User": true,
     "Upload": true,
     "Sale": true,
-    "Product": true
+    "Product": true,
+    "Purchase": true
 }
