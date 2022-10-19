@@ -69,9 +69,11 @@ class PurchaseController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit($id)
+    public function edit(Purchase $purchase)
     {
-        return view('purchase::edit');
+        $urlPost = route('purchase.edit.post', $purchase->id);
+        // dd($purchase);
+        // return Inertia::render('Purchases/EditForm', ['urlPost' => $urlPost, 'data' => $purchase]);
     }
 
     /**
@@ -80,9 +82,22 @@ class PurchaseController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(PurchaseRequest $request, Purchase $purchase)
     {
-        //
+        $purchase->fill($request->only($purchase->getFillable()));
+        if($purchase->isDirty()){
+            $purchase->save();
+        }
+
+        foreach($request->products as $product){
+            $purchase->purchaseDetails()->updateOrCreate([
+                'product_name' => $product['product_name'],
+                'quantity' => $product['quantity'],
+                'price' => $product['price'],
+            ]);
+        }
+
+        // return redirect()->route('purchase.index');
     }
 
     /**
@@ -90,8 +105,10 @@ class PurchaseController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function destroy(Purchase $purchase)
     {
-        //
+        $purchase->purchaseDetails()->delete();
+        $purchase->delete();
+        // return redirect()->route('purchase.index');
     }
 }
