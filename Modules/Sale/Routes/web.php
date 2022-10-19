@@ -38,5 +38,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return $pdf->stream('sale-'. $sale->reference .'.pdf');
     })->name('sales.pdf');
     //Sales
-    Route::resource('sales', [SaleController::class]);
+    Route::resource('sales', SaleController::class);
 });
