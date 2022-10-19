@@ -14,7 +14,7 @@ use Modules\User\Http\Controllers\RoleController;
 |
 */
 
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     //User Profile
     Route::get('/user/profile', [ProfileController::class,'edit'])->name('profile.edit');
