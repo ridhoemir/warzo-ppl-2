@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Inertia } from '@inertiajs/inertia'
 import { Head } from "@inertiajs/inertia-react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -8,22 +8,30 @@ export default function EditForm({ data, urlPost ,auth, errors }) {
 
       const [values, setValues] = useState({
         date: data.date || "",
-        discount_percentage: data.discount_percentage || 0,
-        discount_amount: data.discount_amount ||0,
-        total_amount: data.total_amount ||0,
-        paid_amount: data.paid_amount || 0,
-        payment_method: data.payment_method ||"cash",
-        payment_status: data.payment_status ||  "done",
-        note: data.note || "",
-        status: data.status || "done",
-        products: data.purchase_details|| []
+        discount_percentage:  0,
+        discount_amount: 0,
+        total_amount: 0,
+        paid_amount:  0,
+        payment_method: "cash",
+        payment_status:   "done",
+        note:  "",
+        status:  "done",
+        products:  []
       })
 
-      const [formValues, setFormValues] = useState([{ 
+      
+      const [formValues, setFormValues] = useState([values.products,{ 
         product_name: "", 
         quantity : "",
         price : ""
       }])
+
+      useEffect(() => {
+        setFormValues(data.purchase_details)
+        setValues(data)
+        // console.log(formValues)
+        // console.log(data)
+      },[])
 
       function addFormFields() {
         const newField = {
@@ -72,16 +80,16 @@ export default function EditForm({ data, urlPost ,auth, errors }) {
             ...values,
             [key]: value,
         }))
-        console.log(values)
+        // console.log(values)
       }
     
       function handleSubmit(e) {
         e.preventDefault()
-        // handleUpdatePrice()
         setValues(() => ({
           ...values,
           products: formValues
         }))
+
         Inertia.post(urlPost, values)
       }
       
@@ -89,7 +97,7 @@ export default function EditForm({ data, urlPost ,auth, errors }) {
 
       function handleProductChange(i, e){
         let data = [...formValues]
-        data[i][e.target.id] = e.target.value
+        data[i][e.target.id] = e.target.type === 'number' ? Number(e.target.value) : e.target.value
         setFormValues(data)
         updateValueForDiscount()
       }
@@ -146,7 +154,7 @@ export default function EditForm({ data, urlPost ,auth, errors }) {
                 <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div className="p-6 bg-white border-b border-gray-200">              
                         <h1>Add Product</h1>
-                        {values.products.map((element, index) => (
+                        {formValues.map((element, index) => (
                           <div key={index} className="mb-6 text-center align-content-center justify-center justify-items-center justify-self-center content-center items-center place-content-center flex">
                             <label htmlFor="product_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-500">Product Name</label>
                             <input type="text" id="product_name" onChange={event => handleProductChange(index,event)} className="text-center m-auto w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g Nasi Goreng" value={element.product_name} required/>

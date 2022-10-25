@@ -36,8 +36,9 @@ class PurchaseController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(PurchaseRequest $request, Purchase $purchase)
+    public function store(Request $request, Purchase $purchase)
     {
+        // dd($request->all());
         $purchase->fill($request->only($purchase->getFillable()));
         $purchase->user_id = auth()->user()->id;
         $purchase->reference = 'PUR-'.date('YmdHis');
@@ -73,7 +74,7 @@ class PurchaseController extends Controller
     {
         $urlPost = route('purchase.edit.post', $purchase->id);
         // dd($purchase);
-        // return Inertia::render('Purchases/EditForm', ['urlPost' => $urlPost, 'data' => $purchase]);
+        return Inertia::render('Purchases/EditForm', ['urlPost' => $urlPost, 'data' => $purchase]);
     }
 
     /**
@@ -89,15 +90,18 @@ class PurchaseController extends Controller
             $purchase->save();
         }
 
-        foreach($request->products as $product){
-            $purchase->purchaseDetails()->updateOrCreate([
-                'product_name' => $product['product_name'],
-                'quantity' => $product['quantity'],
-                'price' => $product['price'],
-            ]);
+        if($purchase->purchaseDetails()->get()->toArray() != $request->products){
+            $purchase->purchaseDetails()->delete();
+            foreach($request->products as $product){
+                $purchase->purchaseDetails()->create([
+                    'product_name' => $product['product_name'],
+                    'quantity' => $product['quantity'],
+                    'price' => $product['price'],
+                    ]);
+            }
         }
 
-        // return redirect()->route('purchase.index');
+        return redirect()->route('purchase.index');
     }
 
     /**
