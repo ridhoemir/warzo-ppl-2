@@ -40,6 +40,12 @@ export default function Authenticated({ auth, header, children }) {
                                 >
                                     Product 
                                 </NavLink>
+                                <NavLink
+                                    href={route("purchase.index")}
+                                    active={route().current("purchase.index")}
+                                >
+                                    Purchases
+                                </NavLink>
                             </div>
                         </div>
 
