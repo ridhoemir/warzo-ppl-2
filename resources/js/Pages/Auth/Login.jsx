@@ -6,7 +6,6 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/inertia-react";
-import CardSingle from "@/Components/CardComponent";
 import "../../../css/login.css"
 
 export default function Login({ status, canResetPassword }) {
@@ -73,7 +72,7 @@ export default function Login({ status, canResetPassword }) {
                     </div>
 
                     <div className="flex items-center justify-center mt-5">
-                        <PrimaryButton className="mb-2" processing={processing}>
+                        <PrimaryButton type="submit" className="mb-2 bg-gray-600 text-white active:bg-gray-900" processing={processing}>
                             Log in
                         </PrimaryButton>
                     </div>
