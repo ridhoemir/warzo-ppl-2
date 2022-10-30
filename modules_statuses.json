@@ -3,5 +3,6 @@
     "Upload": true,
     "Sale": true,
     "Product": true,
-    "Purchase": true
+    "Purchase": true,
+    "Report": true
 }
