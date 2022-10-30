@@ -1,0 +1,10 @@
+
+.login-card{
+    background-image: url("img/backgroundLogo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.label-color{
+    color: #FFE9A0;
+}
