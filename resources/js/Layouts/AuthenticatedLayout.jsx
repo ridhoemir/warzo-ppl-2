@@ -46,6 +46,12 @@ export default function Authenticated({ auth, header, children }) {
                                 >
                                     Purchases
                                 </NavLink>
+                                <NavLink
+                                    href={route("report.index")}
+                                    active={route().current("report.index")}
+                                >
+                                    Report
+                                </NavLink>
                             </div>
                         </div>
 
